@@ -869,3 +869,114 @@ public:
 // ```text
 // Count 0s → remember previous fort → if opposite, update maximum.
 // ```
+
+//1295. find even number of digits in a array
+
+class Solution {
+public:
+    /**
+     * Counts the number of integers that contain an even number of digits.
+     *
+     * Approach:
+     * - Traverse through each number in the array.
+     * - Count the number of digits using repeated integer division by 10.
+     * - If the digit count is even, increment the result.
+     *
+     * Example:
+     * nums = [12, 345, 2, 6, 7896]
+     *
+     * 12   -> 2 digits  -> Even  -> Count
+     * 345  -> 3 digits  -> Odd
+     * 2    -> 1 digit   -> Odd
+     * 6    -> 1 digit   -> Odd
+     * 7896 -> 4 digits  -> Even  -> Count
+     *
+     * Result = 2
+     *
+     * Time Complexity: O(n * d)
+     *   - n = number of elements in nums
+     *   - d = number of digits in each number
+     *
+     * Space Complexity: O(1)
+     *   - Only a constant amount of extra space is used.
+     *
+     * @param nums Vector of integers.
+     * @return Number of integers having an even number of digits.
+     */
+    int findNumbers(vector<int>& nums) {
+
+        int count = 0;
+
+        // Traverse through every number in the array
+        for (int i = 0; i < nums.size(); i++) {
+
+            int n = nums[i];
+            int digits = 0;
+
+            // Count the number of digits in the current number
+            while (n > 0) {
+                n = n / 10;
+                digits++;
+            }
+
+            // Check if the number of digits is even
+            if (digits % 2 == 0) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+};
+
+
+
+
+//1480. running sum of an array
+class Solution {
+public:
+    vector<int> runningSum(vector<int>& nums) {
+        int n=nums.size();
+        for(int i=1; i<n ;i++){
+            nums[i] = nums[i]+nums[i-1];
+        }
+    return nums ;   
+    }
+};
+
+
+//414.Third maximum number 
+
+
+#include <vector>
+#include <climits>
+
+class Solution {
+public:
+    // Finds 3rd distinct max, or overall max if < 3 distinct exist.
+    // Time: O(n), Space: O(1).
+    int thirdMax(std::vector<int>& nums) {
+        long long first = LLONG_MIN;
+        long long second = LLONG_MIN;
+        long long third = LLONG_MIN;
+
+        for (int n : nums) {
+            // Ignore duplicates
+            if (n == first || n == second || n == third) continue;
+
+            if (n > first) {
+                third = second;
+                second = first;
+                first = n;
+            } else if (n > second) {
+                third = second;
+                second = n;
+            } else if (n > third) {
+                third = n;
+            }
+        }
+
+        // If third maximum was never updated, return overall maximum
+        return (third == LLONG_MIN) ? first : third;
+    }
+};
